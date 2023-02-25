@@ -1,6 +1,5 @@
 package Programmers;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -34,8 +33,7 @@ public class EscapeMiro_159993 {
             System.out.println(-1);
             return;
         }
-        System.out.println(cnt+" "+cnt2);
-        System.out.println(cnt + cnt2);
+        System.out.println(cnt2);
     }
 
     private static void makeCharArray() {
@@ -58,7 +56,7 @@ public class EscapeMiro_159993 {
                 int dc = p.y + dy[d];
 
                 // 맵 벗어남 or 방문 or 벽 continue
-                if (dr < 0 || dr >= N || dc < 0 || dc >= M|| v[dr][dc] || map[dr][dc] == 'X') {
+                if (dr < 0 || dr >= N || dc < 0 || dc >= M || v[dr][dc] || map[dr][dc] == 'X') {
                     continue;
                 }
 
@@ -67,15 +65,18 @@ public class EscapeMiro_159993 {
 
                 if (map[dr][dc] == target) {
                     // 다시 세팅
-                    que = new LinkedList<>();
-                    que.add(new Point(dr, dc));
-                    v = new boolean[N][M];
-                    v[dr][dc] = true;
-                    return cnt + 1;
+                    if (target == 'L') {
+
+                        que = new LinkedList<>();
+                        que.add(new Point(dr, dc, p.cnt + 1));
+                        v = new boolean[N][M];
+                        v[dr][dc] = true;
+                    }
+                    return p.cnt+1;
                 }
-                que.add(new Point(dr, dc));
+                que.add(new Point(dr, dc, p.cnt +1));
             }
-            cnt++;
+
         }
         return -1;
     }
@@ -88,7 +89,7 @@ public class EscapeMiro_159993 {
             for (int j = 0; j < M; j++) {
                 if (map[i][j] == 'S') {
                     v[i][j] = true;
-                    que.add(new Point(i, j));
+                    que.add(new Point(i, j, 0));
                     return;
                 }
             }
@@ -96,10 +97,12 @@ public class EscapeMiro_159993 {
     }
 
     static class Point {
-        int x, y;
-        public Point(int x, int y) {
+        int x, y, cnt;
+
+        public Point(int x, int y, int cnt) {
             this.x = x;
             this.y = y;
+            this.cnt = cnt;
         }
     }
 }
