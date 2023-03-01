@@ -3,11 +3,19 @@ package BOJ;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+
+//다음 경로로 가는 방법은 3가지이지만
+//현재 위치로 오는 방법은 1가지! -> 기록
+
 
 public class HideAndSeek4_13913 {
-    static int[] dx = {-1, 1};
     static int N, K;
+    static int[] parent;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,67 +29,67 @@ public class HideAndSeek4_13913 {
             return;
         }
 
+        // 탐색
         Point p = bfs();
+
+        // 출력
         StringBuilder sb = new StringBuilder();
         sb.append(p.cnt + 1).append("\n");
-        for (int x : p.steps) {
-            sb.append(x).append(" ");
+
+        Stack<Integer> stack = new Stack<>();
+        int last = parent[K];
+        while (last != N) {
+            stack.push(last);
+            last = parent[last];
         }
-        sb.append(K);
+        // 스택 이용해서 거꾸로 출력
+        sb.append(N);
+        while (!stack.isEmpty()) {
+            sb.append(" ").append(stack.pop());
+        }
+        sb.append(" ").append(K);
+
         System.out.println(sb.toString());
     }
 
     private static Point bfs() {
 
         Queue<Point> que = new LinkedList<>();
-        List<Integer> first = new ArrayList<>();
-        first.add(N);
-        que.offer(new Point(N, 0, first));
-        boolean[] v = new boolean[200000];
-        v[N] = true;
+        que.offer(new Point(N, 0)); // 시작점
+        boolean[] v = new boolean[110000];
+        v[N] = true; // 시작지점 방문
+        parent = new int[110000]; // 루트 저장
 
         while (!que.isEmpty()) {
             Point p = que.poll();
-            List<Integer> steps = new ArrayList<>(p.steps);
 
-            for (int d = 0; d < 2; d++) {
-                int dr = p.x + dx[d];
-                if (dr < 0 || dr >= 200000 || v[dr]) {
+            // 이동 - 좌, 우, 2배
+            int[] move = new int[]{p.x - 1, p.x + 1, 2 * p.x};
+
+            for (int d = 0; d < 3; d++) {
+                int dr = move[d];
+                if (dr < 0 || dr >= 110000 || v[dr]) {
                     continue;
                 }
+                // 방문 & 루트 저장
                 v[dr] = true;
+                parent[dr] = p.x;
+                // 찾았다
                 if (dr == K) {
                     return p;
                 }
-                List<Integer> nextSteps = new ArrayList<>(steps);
-                nextSteps.add(dr);
-                que.offer(new Point(dr, p.cnt + 1, nextSteps));
+                que.offer(new Point(dr, p.cnt + 1));
             }
-
-            int dr = 2 * p.x;
-            if (dr < 0 || dr >= 200000 || v[dr]) {
-                continue;
-            }
-            if (dr == K) {
-                return p;
-            }
-            v[dr] = true;
-            List<Integer> nextSteps = new ArrayList<>(steps);
-            nextSteps.add(dr);
-            que.offer(new Point(dr, p.cnt + 1, nextSteps));
         }
         return null;
     }
 
     private static class Point {
         int x, cnt;
-        List<Integer> steps;
 
-        public Point(int x, int cnt, List<Integer> steps) {
+        public Point(int x, int cnt) {
             this.x = x;
             this.cnt = cnt;
-            this.steps = steps;
-
         }
     }
 }
