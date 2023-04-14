@@ -3,6 +3,9 @@ package BOJ;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Party_1238 {
@@ -19,14 +22,28 @@ public class Party_1238 {
 
         map = new int[N + 1][N + 1];
 
-        Node[] nodes = new Node[N + 1];
+        List<Node> nodes = new ArrayList<>();
 
         for (int m = 0; m < M; m++) {
             st = new StringTokenizer(br.readLine());
-            Node node = new Node(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+            nodes.add(new Node(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
+        }
+        nodes.sort(Comparator.comparingInt(o -> o.time));
 
+        // 초기화
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= N; j++) {
+                map[i][j] = 100;
+            }
+        }
+        for (int i = 1; i <= N; i++) {
+            map[i][i] = 0;
         }
 
+        for (Node node : nodes) {
+            map[node.start][node.end] = node.time;
+
+        }
 
     }
 
