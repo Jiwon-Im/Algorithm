@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-
+// 참고 : https://steady-coding.tistory.com/106
 public class Party_1238 {
+
     static int N, M, X;
 
     public static void main(String[] args) throws IOException {
