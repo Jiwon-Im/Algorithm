@@ -32,12 +32,16 @@ public class Princess7_1941 {
     static private void dfs(int i, int sNum, int yNum) {
 
         // 배열 벗어났을 때 or 임도연파가 더 많을 때 리턴
-        if (i == 25 || yNum == 4) {
+        if (yNum == 4) {
             return;
-        } else if ((sNum + yNum) == 7) {
+        }
+        if ((sNum + yNum) == 7) {
             if (isConnected()) {
                 cnt++;
             }
+            return;
+        }
+        if (i == 25) {
             return;
         }
 
