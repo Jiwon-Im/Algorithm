@@ -37,6 +37,7 @@ public class PuyoPuyo_11559 {
         v = new boolean[N][M];
         bomb();
         gravity();
+
         ans++;
 
     }
