@@ -24,7 +24,9 @@ public class FindingRoute_11403 {
             }
         }
 
-
+        // 원래 맵 : i->j 바로 갈 수 있는 곳
+        // k가 1일 때 : i->j 바로 갈 수 있는 곳 + 1을 거쳐서 갈 수 있는 곳 check 됨
+        // k가 2일 때 : (원래 갈 수 있는 곳 + 1을 거쳐서 갈 수 있는 곳 ) 에서 2를 거쳐서 갈 수 있는 곳 check 됨
         for (int k = 0; k < N; k++) {
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
@@ -44,6 +46,5 @@ public class FindingRoute_11403 {
         }
         System.out.println(sb);
     }
-
 
 }
