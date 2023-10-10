@@ -37,10 +37,12 @@ public class CityConstruction_21924 {
         int left = N - 1;
         // 답
         long selectedWeight = 0;
-        while (left > 0 && !pq.isEmpty()) {
+        while (!pq.isEmpty()) {
             Point p = pq.poll();
+
             int a = find(p.x);
             int b = find(p.y);
+
             // 이미 연결되어 있음
             if (a == b) continue;
 
@@ -49,7 +51,9 @@ public class CityConstruction_21924 {
 
             // 경로 길이 더하기
             selectedWeight += p.weight;
-            left--;
+            if (--left == 0) {
+                break;
+            }
         }
         if (left > 0) {
             System.out.println(-1);
