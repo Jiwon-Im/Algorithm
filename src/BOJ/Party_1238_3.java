@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
@@ -70,7 +69,7 @@ public class Party_1238_3 {
                 int temp = D[p.dest] + trev.weight;
                 if (D[trev.dest] > temp) {
                     D[trev.dest] = temp;
-                    pq.offer(new Point(trev.dest,temp));
+                    pq.offer(new Point(trev.dest, temp));
                 }
             }
         }
@@ -101,7 +100,7 @@ public class Party_1238_3 {
                 int temp = D[p.dest] + trev.weight;
                 if (D[trev.dest] > temp) {
                     D[trev.dest] = temp;
-                    pq.offer(new Point(trev.dest,temp));
+                    pq.offer(new Point(trev.dest, temp));
                 }
             }
         }
