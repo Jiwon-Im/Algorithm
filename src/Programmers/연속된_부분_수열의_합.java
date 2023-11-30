@@ -10,23 +10,34 @@ public class 연속된_부분_수열의_합 {
 
     public static int[] solution(int[] sequence, int k) {
         int N = sequence.length;
-        int[] pSum = new int[N + 1];
+        int[] answer = {-1, -1};
 
+        int left = 0, right = 0;
+        int sum = sequence[0];
 
-        for (int i = 1; i <= N; i++) {
-            pSum[i] = pSum[i - 1] + sequence[i - 1];
-        }
+        while (left < N || right < N) {
 
-        // 길이
-        for (int i = 0; i <= N; i++) {
-            // 인덱스
-            for (int j = 1; j <= N; j++) {
-                if (j + i <= N && pSum[j + i] - pSum[j - 1] == k) {
-                    System.out.println(pSum[j + i] + " " + pSum[j]);
-                    return new int[]{j - 1, j + i - 1};
+            if (sum == k) {
+                if (answer[0] == -1 || right - left < answer[1] - answer[0]) {
+                    answer[0] = left;
+                    answer[1] = right;
                 }
             }
+
+            if (sum <= k && right < N) {
+                right++;
+                if (right < N) {
+                    sum += sequence[right];
+                }
+            } else {
+                if (left < N) {
+                    sum -= sequence[left];
+                }
+                left++;
+            }
+
         }
-        return null;
+
+        return answer;
     }
 }
