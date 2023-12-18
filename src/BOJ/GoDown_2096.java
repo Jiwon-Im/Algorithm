@@ -11,33 +11,34 @@ public class GoDown_2096 {
         StringTokenizer st;
 
         int N = Integer.parseInt(br.readLine());
-        int[][] map = new int[N][N];
-        for (int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < 3; j++) {
-                map[i][j] = Integer.parseInt(st.nextToken());
-            }
-        }
         int[][] dp = new int[2][3];
 
-        dp[0][0] = dp[1][0] = map[0][0];
-        dp[0][1] = dp[1][1] = map[0][1];
-        dp[0][2] = dp[1][2] = map[0][2];
+        st = new StringTokenizer(br.readLine());
+        dp[0][0] = dp[1][0] = Integer.parseInt(st.nextToken());
+        dp[0][1] = dp[1][1] = Integer.parseInt(st.nextToken());
+        dp[0][2] = dp[1][2] = Integer.parseInt(st.nextToken());
+
+        int[] map = new int[3];
 
         for (int i = 1; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            map[0] = Integer.parseInt(st.nextToken());
+            map[1] = Integer.parseInt(st.nextToken());
+            map[2] = Integer.parseInt(st.nextToken());
+
             // 최댓값
             int temp2 = dp[0][2];
             int temp0 = dp[0][0];
-            dp[0][0] = Math.max(dp[0][0], dp[0][1]) + map[i][0];
-            dp[0][2] = Math.max(dp[0][1], dp[0][2]) + map[i][2];
-            dp[0][1] = Math.max(Math.max(temp0, dp[0][1]), temp2) + map[i][1];
+            dp[0][0] = Math.max(dp[0][0], dp[0][1]) + map[0];
+            dp[0][2] = Math.max(dp[0][1], dp[0][2]) + map[2];
+            dp[0][1] = Math.max(Math.max(temp0, dp[0][1]), temp2) + map[1];
 
             temp2 = dp[1][2];
             temp0 = dp[1][0];
             // 최솟값
-            dp[1][0] = Math.min(dp[1][0], dp[1][1]) + map[i][0];
-            dp[1][2] = Math.min(dp[1][1], dp[1][2]) + map[i][2];
-            dp[1][1] = Math.min(Math.min(temp0, dp[1][1]), temp2) + map[i][1];
+            dp[1][0] = Math.min(dp[1][0], dp[1][1]) + map[0];
+            dp[1][2] = Math.min(dp[1][1], dp[1][2]) + map[2];
+            dp[1][1] = Math.min(Math.min(temp0, dp[1][1]), temp2) + map[1];
         }
 
         System.out.println(Math.max(Math.max(dp[0][0], dp[0][1]), dp[0][2]) + " " + Math.min(Math.min(dp[1][0], dp[1][1]), dp[1][2]));
